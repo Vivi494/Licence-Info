@@ -1,0 +1,186 @@
+Commandes:
+
+tar -xvf (extraire)
+cd
+ssh -p 2019 vjoseph@leria-etud.univ-angers.fr
+ls
+ssh
+kate&
+history
+tree
+dirname
+pwd
+   
+TP 1:
+    exo 5:
+    1)pwd
+        /home/vjoseph
+    2)tree tp-linux-1-sujet
+    3)dirname ./tp-linux-1-sujet/tp-linux-1-sujet.pdf
+        ./tp-linux-1-sujet
+    4)basename ./tp-linux-1-sujet/tp-linux-1-sujet.pdf
+        tp-linux-1-sujet.pdf
+    5)cd tp-linux-1-sujet/B
+    6)ls BA   
+        ls /home/vjoseph/tp-linux-1-sujet/B/BA
+    7)ls AB
+        ls /home/vjoseph/tp-linux-1-sujet/B/AB
+    8)cd ..    cd A     cd AB    cd ABA
+        cd tp-linux-1-sujet/A/AB/ABA
+    9)cd ..    cd..    cd ..
+        cd ~    cd tp-linux-1-sujet
+    10)cd /
+    11)cd home/vjoseph
+        cd
+        cd ~   
+
+
+
+    exo 3
+    1)ps
+    2)ps
+    3)kate&                 [1]+  Fini                    kate  (wd : ~/tp-linux-1-sujet/B)
+    4)kate en moins
+    5)[2+]  processus arrêté sleep 120
+    
+TP 2
+    exo 1
+        1)mkdir dir;mkdir dir/dirA;mkdir dir/dirA/dirAA;mkdir dir/dirA/dirAB;mkdir dir/dirB;mkdir dir/dirB/dirBA;mkdir dir/dirB/dirBB;
+        2)cd dir        touch fileA;touch fileAA;touch fileAB;touch fileB;touch fileBA;touch fileBB;
+        3)cp fileAA dirA/dirAA/fileAA;cp fileAB dirA/dirAB/fileAB;cp fileA dirA/fileA;cp file BA dirB/dirBA/fileBA;cp fileBB dirB/dirBB/fileBB;cp fileB dirB/fileB;
+    
+    exo 2
+        1)mv fileA ficA;mv fileAA ficAA;mv fileAB ficAB;
+    
+    exo 3
+        1)ls -R
+        2)ls *A
+        3)ls *[AB]
+        4)ls [^d]*
+        5)ls f????
+    
+    exo 4
+        1)mv dirB/dirBB/* dirA/dirAA
+        2)rmdir dirB/dirBB
+        3)mv dirA/dirAB dirB/dirBA dirA/dirAA
+    
+    exo 5
+        1)cat french.txt
+        2)head -n 10 french.txt                   tail -20 french.txt
+        3)head -c 1 french.txt  head -c 2 french.txt    head -c 3 french.txt    head -c 4 french.txt    accent 1 octet et a 1 octet rtall 1 octet
+        4)more french.txt
+        5)less french.txtq
+        6)&gy   &{25}
+    
+    exo 6
+        1)
+        2)
+        3)
+        4)
+        5)
+        6)
+
+        
+TP 3
+    exo 1
+        1)ls /usr/sbin > list1       cat list1       des exécutables binaires et des outils de ligne de commande conservés pour l'utilisateur root
+        2)ls /usr/bin > list2
+        3)file list1        ASCII text
+    
+    exo 2
+        1)cat > f1
+        on saisit le contenu du fichier à la console
+        par redirection de la sortie de cat
+        en terminant l'édition par CTRL + D
+        3)diff f1 f2        aucune différence
+    
+    exo 3
+        1)wc -l french.txt          139719
+        2)wc -l < french.txt
+        3)wc -l french.txt > decompte.txt       cat decompte.txt        139719 french.txt
+        4)
+        5)
+        6)wc -l nosuchfile 2> erreur.txt        cat erreur.txt      commande nosuchfile dans erreur.txt
+    
+    exo 4
+        1)cat tr.txt | tr [a-z] C                                       letrre a-z devient C
+        2)cat tr.txt | tr -ds l ou                                      supprime double et l
+        3)cat cut.txt | cut -c 2-3                                      prend les 2-3 caractères
+        4)cat cut.txt | cut -d: -f2-3,5                                 supprime colonne 2-3 et la 5
+        5)sort -r sort.txt                                              
+        6)sort -t: -k2,2 sortfield.txt                                  
+        7)sort -t: -k2,2 sortfield.txt | uniq                           
+        8)paste paste1.txt paste2.txt                                   
+        9)paste paste1.txt paste2.txt | tr [[:lower:]] [[:upper:]]      
+    
+    exo 5
+        1)
+        2)
+        
+TP 4
+    exo 1
+        1)cut -d ':' -f 1,4 groups.txt
+        2)cut -d ':' -f 3 groups.txt | sort -n > numeros.txt 
+        3)sort -k 3 -t ':' -n groups.txt | head -3
+        4)sort -k 3 -t ':' -n groups.txt | tail -20
+        5)cut -d ':' -f 4 groups.txt | sort | uniq -d
+        6)cut -d ':' -f 4 groups.txt |tr ',' '\n' | sort | uniq
+    
+    exo 2
+        1)nous demande d'écrire une ligne et la retourne            read ligne; echo $ligne
+        2)read -i ligne; tr '[A-Z]' '[a-z]'; echo $ligne  (pas exactement)
+        3)
+        4)
+        5)
+    
+    exo 3
+        1)
+        2)
+        
+TP 5
+    exo 1
+        1)egrep '^T' essai.txt
+        2)egrep -n '^T' essai.txt
+        3)egrep -c '^T' essai.txt
+        4)egrep --color  '\<l' essai.txt
+        5)egrep -v '^T' essai.txt
+        6)egrep --color -v '\<l' essai.txt
+        7)egrep -v '^T' essai.txt > extrait1.txt
+        8)egrep -v '[qv]' essai.txt > extrait2.txt
+        9)egrep '.{130,}' essai.txt > extrait3.txt
+        10)egrep -v '\<[[:alpha:]]{6}\>' essai.txt > extrait4.txt
+        
+    exo 2
+        1)grep 'dimitri' groups.txt | cut -f 1 -d ':'
+        2)egrep ':dimitri$' groups.txt | cut -f 1 -d ':'
+        3)egrep '([[:alpha:]]*,){3,}' groups.txt | cut -f 1 -d ':'
+        
+    exo 3
+        1)
+        2)
+        3)
+        4)
+        5)
+        6)
+        7)
+
+TP 6
+    exo 1
+        1)cd tp-linux-6-sujet/rep
+        2)rm -ri toDelete/
+        3)chmod 710 composer.json
+        4)find ./ -name '*.php' -perm 644 -ls
+        5)find ./ -name '*.php' -exec chmod go-r {} \;
+        6)
+    
+    exo 2
+        1)egrep '1999-0[568]' bioinformatics1 
+        2)egrep 'Jackson' bioinformatics1
+        3)egrep 'Computer Sciences' bioinformatics1 |sort -k 2 -t ';'
+        4)sort -k 3 -t  ';' bioinformatics1 |egrep -v '#' | head -1 | cut -d ';' -f 1,2,3
+        5)sort -n -r -k 5 -t  ';' bioinformatics1 |egrep -v '#' | head -3 | cut -d ';' -f 1,2,5 | tr ';' ' '
+    
+    exo 3
+        1)
+        2)
+        3)

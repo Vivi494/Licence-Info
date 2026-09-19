@@ -1,0 +1,95 @@
+1.1)
+mkdir /home/vjoseph/LINUX
+
+1.2)
+cd LINUX
+
+1.3)
+cd ..
+cd LINUX ou cd -
+
+1.4)
+pwd
+
+1.5)
+ls / > fichier1
+
+1.6)
+touch .fichier2
+
+1.7)
+ls / ~ > .fichier2
+
+1.8)
+cd ~
+
+1.9)
+ls -l
+
+1.10)
+ls -al
+
+1.11)
+pareil qu'au dessus
+
+1.12)
+mkdir TP1
+
+1.13)
+cp ~/LINUX/fichier1 ~/LINUX/TP1/fichier1_copie
+
+1.14)
+mv .fichier2 ~/LINUX/TP1
+
+1.15)
+mv ~/LINUX/TP1/.fichier2 ~/LINUX/TP1/fichier2
+
+1.16)
+mkdir ../UNIX
+
+1.17)
+cp -R ~/LINUX/* ~/UNIX
+
+1.18)
+ln ~/UNIX/fichier1 fichier1_ref_phys
+ln -s ~/UNIX/fichier1 fichier1_ref_symb
+
+1.19)
+ls -i fichier1_* ../UNIX/fichier1
+physique=same mais pas symbolique
+
+1.20)
+rm TP1/fichier2
+
+1.21)
+rm -R TP1/fichier2
+
+1.22)
+symbo marche plus mais change pas le physique
+
+1.23)
+le lien symbolique est un lien mort
+
+1.24)
+which grep
+
+1.25)
+whoami
+
+1.26)
+man grep
+
+1.27)
+who
+
+1.28)
+du -h
+
+1.29)
+df -h
+
+1.30)
+chmod a+w fichier
+
+1.31)
+chmod (binaire) fichier

@@ -1,0 +1,441 @@
+---------------------FILE-----------------------------
+--déclaration structures--
+using element = int;
+struct maillon
+{
+element val ;
+maillon * suiv ;
+} ;
+struct file
+{
+maillon * tete ;
+maillon * queue ;
+} ;
+
+--creation--
+void creer_file (file & F)
+{
+F.tete = nullptr ;
+F.queue = nullptr ;
+}
+
+--ajouter element--
+void ajouter(struct file &f, element val) {
+    maillon *nouveau = new maillon;
+    nouveau->val = val;
+    nouveau->suiv = nullptr;
+
+    if (f.queue == nullptr) {
+        f.tete = f.queue = nouveau;
+    } else {
+        f.queue->suiv = nouveau;
+        f.queue = nouveau;
+    }
+}
+
+
+void enfiler(file &f, ptm *noeud) {
+    file_ptm *nouveau = new file_ptm{noeud, nullptr};
+
+    if (f.queue == nullptr) {
+        // Si la file est vide, le nouvel élément est la tête et la queue
+        f.tete = f.queue = nouveau;
+    } else {
+        // Sinon, on ajoute à la fin et on met à jour la queue
+        f.queue->suivant = nouveau;
+        f.queue = nouveau;
+    }
+}
+
+
+--retirer element--
+element retirer (file & F)
+{
+if (f.tete == nullptr) {
+        return;
+    }
+
+    maillon *temp = f.tete;
+    val = temp->val;
+    f.tete = f.tete->suiv;
+
+    if (f.tete == nullptr) {
+        f.queue = nullptr;
+    }
+
+    delete temp;
+}
+
+--afficher--
+void afficher(const file &f) {
+    maillon *current = f.tete;
+    while (current != nullptr) {
+        cout << current->val << " ";
+        current = current->suiv;
+    }
+    cout << endl;
+}
+
+--consulter premier elt--
+element premier (const file & F)
+{
+return F.tete->val ;
+}
+
+
+--consulter dernier elt--
+element premier (const file & F)
+{
+return F.tete->queue ;
+}
+
+--verification si c'est vide--
+bool est_vide (const file & F)
+{
+return (F.queue == nullptr) ;
+}
+
+----------------------------Arbre Binaire-------------------------
+--calculer le nombre de feuilles--
+int nbFeuille(ArbreBinaire A){
+    if(A == nullptr){
+        return 0;
+    }
+    if(estFeuille(A)){
+        return 1;
+    }
+    return nbFeuille(A->sad) + nbFeuille(A->sag);
+}
+
+--calculer la profondeur d'un arbre binaire--
+int profondeur(abGen A) {
+    if (A == nullptr) {
+        return 0;
+    }
+    int profondeurGauche = profondeur(A->parent1);
+    int profondeurDroite = profondeur(A->parent2);
+    if (profondeurGauche > profondeurDroite) {
+        return 1 + profondeurGauche;
+    } else {
+        return 1 + profondeurDroite;
+    }
+}
+--calculer la hauteur d'un arbre--
+int hauteur(Arbre A){
+    //hauteur d'un arbre vide
+    if(A == nullptr){
+        return -1;
+    }
+    else return 1 + std::max(hauteur(A->sag),hauteur(A->sad));
+}
+
+--rechercher un element d'un arbre binaire--
+bool sontIdentiques(individu i1, individu i2){
+    if((i1.nom == i2.nom) and (i1.prenom == i2.prenom) and (i1.datenaiss.jour == i2.datenaiss.jour) and (i1.datenaiss.mois == i2.datenaiss.mois) and (i1.datenaiss.annee == i2.datenaiss.annee)){
+        return true;
+    }
+    else return false;
+}
+abGen recherche_individu(abGen A, individu e){
+    if(A == nullptr){
+        return nullptr;
+    }
+    else if(sontIdentiques(A->val,e)){
+        return A;
+    }
+    abGen aux = recherche_individu(A->parent1,e);
+
+    if(aux != nullptr){
+        return aux;
+    }
+    else return recherche_individu(A->parent2,e);
+}
+
+
+--ajouter un element d'un arbre binaire--
+abGen ajout_individu(abGen &A,individu i1,individu i2){
+    // Chercher le nœud contenant I2
+    abGen nodeI2 = recherche_individu(A, i2);
+    // Si I2 n'est pas trouvé, on ne modifie pas l'arbre.
+    if (nodeI2 == nullptr) {
+        return A;
+    }
+        //vérifier le nombre des parents qu'il possede
+        if(nodeI2->parent1 == nullptr){
+            nodeI2->parent1 = new noeud;
+            nodeI2->parent1->val = i1;
+            nodeI2->parent1->parent1 = nullptr;
+            nodeI2->parent2->parent2 = nullptr;
+        }
+        else if(nodeI2->parent2 == nullptr){
+            nodeI2->parent2 = new noeud;
+            nodeI2->parent1->val = i1;
+            nodeI2->parent2->parent1 = nullptr;
+            nodeI2->parent2->parent2 = nullptr;
+        }
+        else return A;
+}
+
+----------------------------------------------------------------------------------
+
+-----ABR-----
+void ajout_element(Arbre &A, int e){
+    if(A == nullptr){
+        Noeud *aux = new Noeud;
+        aux->val = e;
+        aux->sad = nullptr;
+        aux->sag = nullptr;
+        A = aux;
+    }
+    else if(e <= A->val){
+        ajout_element(A->sag,e);
+    }
+    else ajout_element(A->sad,e);
+}
+
+bool appartient(Arbre A, int e){
+    if(A == nullptr){
+        return false;
+    }
+    if(A->val == e){
+        return true;
+    }
+    if(e <= A->val){
+        return appartient(A->sag,e);
+    }
+    else return appartient(A->sad,e);
+}
+
+Arbre retour_adresse_elt_cherche(Arbre A, int e){
+    if(A == nullptr){
+        return nullptr;
+    }
+    if(A->val == e){
+        return A;
+    }
+    if(e < A->val){
+        return retour_adresse_elt_cherche(A->sag,e);
+    }
+    else return retour_adresse_elt_cherche(A->sad,e);
+}
+
+Arbre suppression(Arbre &A, int e){
+    if(A == nullptr){
+        return nullptr;
+    }
+
+    if(e <= A->val){
+        suppression(A->sag,e);
+    }
+    else if(e >= A->val){
+        suppression(A->sad,e);
+    }
+
+    else{
+        //noeud est une feuille
+        if((A->sag == nullptr and A->sad == nullptr)){
+        delete A;
+        A = nullptr;
+        }
+        //le noeud a un seul fils
+        else if(A->sag == nullptr){
+            Arbre temp = A;
+            A = A->sad;
+            delete temp;
+        }
+        else if(A->sad == nullptr){
+            Arbre aux = A;
+            A = A->sag;
+            delete aux;
+         }
+        else{
+            Noeud *t = A->sad;
+            while(A->sad != nullptr){
+                t = t->sag;
+            }
+            A->val = t->val;
+            A->sad = suppression(A->sad,t->val);
+        }
+    }
+    return A;
+}
+
+--fusionner deux arbres--
+void Fusion(Arbre &a1, Arbre &a2){
+    if(a1 == nullptr){
+        return;
+    }
+    if(a2 == nullptr){
+        return;
+    }
+    while(a2 != nullptr){
+        if(a2->val <= a1->val){
+            ajout_element(a1->sag,a2->val);
+            a2 = a2 ->sag;
+        }
+        else if(a2->val >= a1->val){
+            ajout_element(a1->sad,a2->val);
+            a2 = a2->sad;
+        }
+    }
+}
+
+---------------------------------AVL-----------------------------------
+
+--les rotations--
+void rota_gauche(Arbre &a){
+    if(a == nullptr){
+        return;
+    }
+    if(h_arbre(a) <= -1){
+        Arbre aux = a->sad;
+        a->sad = aux->sag;
+        aux->sag = a;
+
+        maj_hauteur_arbre(a);
+        maj_hauteur_arbre(aux);
+
+    }
+}
+
+void rota_droite(Arbre &A) {
+    if (A == nullptr || A->sag == nullptr) return; // Impossible de tourner si pas de sous-arbre gauche
+
+    Arbre B = A->sag; // Nouveau sommet après rotation
+    A->sag = B->sad;  // L'ancien sommet prend le sous-arbre droit de B
+    B->sad = A;       // A devient le fils droit de B
+
+    // Mettre à jour les hauteurs
+    maj_hauteur_arbre(A);
+    maj_hauteur_arbre(B);
+
+    A = B; // Mise à jour du pointeur pour refléter la rotation
+}
+
+
+void rota_gauche_droite(Arbre &A){
+    if(A == nullptr){
+        return;
+    }
+    rota_gauche(A->sag);
+    rota_droite(A);
+
+}
+
+void rota_droite_gauche(Arbre &A) {
+    if (A == nullptr) return;
+
+    rota_droite(A->sad); // Appliquer d'abord une rotation droite sur le sous-arbre droit
+    rota_gauche(A);       // Puis une rotation gauche sur la racine
+}
+
+--ajouter un element--
+
+Arbre AjouterAVL(Arbre &A, int e){
+    if(A == nullptr){
+        ajout_element(A,e);
+        maj_hauteur_arbre(A);
+    }
+    if(A->val == e){
+        return A;
+     }
+    if(e < A->val){
+        A->sag = AjouterAVL(A->sag,e);
+    }
+    else if(e > A->val ){
+        A->sad = AjouterAVL(A->sad,e);
+    }
+    else return A;
+
+    // Mise à jour de la hauteur
+        maj_hauteur_arbre(A);
+
+        // Calcul du facteur d'équilibre
+        int balance = h_arbre(A->sag) - h_arbre(A->sad);
+
+        // Cas 1 : Rotation droite
+        if (balance > 1 && e < A->sag->val) {
+            rota_droite(A);
+        }
+
+        // Cas 2 : Rotation gauche
+        if (balance < -1 && e > A->sad->val) {
+            rota_gauche(A);
+        }
+
+        // Cas 3 : Rotation gauche-droite
+        if (balance > 1 && e > A->sag->val) {
+           rota_gauche(A->sag);
+            rota_droite(A);
+        }
+
+        // Cas 4 : Rotation droite-gauche
+        if (balance < -1 && e < A->sad->val) {
+            rota_droite(A->sad);
+            rota_gauche(A);
+        }
+
+        return A; // Retourne le nœud mis à jour
+}
+
+--supprimer un element--
+Arbre SupprimerAVL(Arbre A, int e) {
+    if (A == nullptr) return nullptr; // Si l'arbre est vide, on ne fait rien
+
+    if (e < A->val) {
+        A->sag = SupprimerAVL(A->sag, e);
+    } 
+    else if (e > A->val) {
+        A->sad = SupprimerAVL(A->sad, e);
+    } 
+    else {
+        if (A->sag == nullptr && A->sad == nullptr) {
+            delete A;
+            return nullptr; // Retourne NULL pour que le parent mette à jour son pointeur
+        }
+
+        if (A->sag == nullptr) { // Seulement un fils droit
+            Arbre temp = A->sad;
+            delete A;
+            return temp; // Le parent pointera sur cet enfant
+        } 
+        else if (A->sad == nullptr) { // Seulement un fils gauche
+            Arbre temp = A->sag;
+            delete A;
+            return temp; // Le parent pointera sur cet enfant
+        }
+
+        Arbre temp = A->sad;
+        while (temp->sag != nullptr) {
+            temp = temp->sag;
+        }
+        A->val = temp->val; // Remplacement de la valeur
+        A->sad = SupprimerAVL(A->sad, temp->val); // Supprimer le successeur
+    }
+
+    maj_hauteur_arbre(A);
+
+    int balance = h_arbre(A->sag) - h_arbre(A->sad);
+
+    // Cas 1 : Rotation droite (Left Heavy)
+    if (balance > 1 && h_arbre(A->sag->sag) >= h_arbre(A->sag->sad)) {
+        return rota_droite(A);
+    }
+
+    if (balance < -1 && h_arbre(A->sad->sad) >= h_arbre(A->sad->sag)) {
+        return rota_gauche(A);
+    }
+
+    if (balance > 1 && h_arbre(A->sag->sag) < h_arbre(A->sag->sad)) {
+        A->sag = rota_gauche(A->sag);
+        return rota_droite(A);
+    }
+
+    if (balance < -1 && h_arbre(A->sad->sad) < h_arbre(A->sad->sag)) {
+        A->sad = rota_droite(A->sad);
+        return rota_gauche(A);
+    }
+
+    return A; // Retourne l'arbre équilibré
+}
+
