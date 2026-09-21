@@ -1,0 +1,76 @@
+let tva = 0.2;;
+
+let calculTTC = function ht -> ht+.ht*.tva;;
+
+calculTTC 26.;;
+
+let bissextile = function annee -> if annee mod 4 = 0 && annee mod 100 != 0
+                                    then "bissextile"
+                                    else if annee mod 400 = 0
+                                        then "bissextile"
+                                        else "pas bissextile";;
+
+bissextile 2024;;
+
+let minuscule = function c -> if c >= 'a' && c <= 'z'
+                                then "minuscule"
+                                else "pas minuscule";;
+
+minuscule 'c';;
+
+let moyenne = function a -> function b -> (a+.b)/.2.;;
+
+moyenne 1. 2.;;
+
+let resdiv = function a -> function b -> (a/b,a mod b);;
+
+resdiv 17 5;;
+
+let puissance4 = function x -> let puissance2 = function x -> x*x
+                                            in puissance2 x * puissance2 x;;
+
+puissance4 5;;
+
+let upper = function c -> Char.uppercase_ascii c;;
+
+upper 'b';;
+
+let rec fibo = function n -> if n = 0
+                                then 0
+                                else if n = 1
+                                    then 1
+                                    else fibo (n-1) + fibo (n-2);;
+
+fibo 12;;
+
+let rec sommecarre = function n -> if n<1
+                                    then failwith "n plus petit que 1"
+                                    else if n = 1
+                                        then 1
+                                        else n*n + sommecarre (n-1);;
+
+sommecarre 15;;
+
+let rec sigma n f = if n < 1
+                        then failwith "n plus petit que 1"
+                        else if n = 1
+                            then f n
+                            else f n + sigma (n-1) f;;
+
+let sommecarreModif = function n -> let carre = function x -> x*x in
+                        sigma n carre ;;
+
+sommecarreModif 15 ;;
+
+let rond f g = function x -> g (f x);;
+
+rond puissance4 puissance4 5;;
+
+let rec newton x y eps = let y2 = y*.y in 
+                    if y2 < x +. eps && y2 > x -. eps
+                    then y
+                    else newton x ((y +. x /. y ) /. 2. ) eps;;
+
+let y = 25.;;
+
+newton y y 0.1;;
