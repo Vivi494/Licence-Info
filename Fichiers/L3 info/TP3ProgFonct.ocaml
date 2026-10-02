@@ -1,0 +1,77 @@
+type 'a arbrebin = Val of 'a | Arbre of ( 'a arbrebin * 'a arbrebin );;
+
+let a1 = (Arbre(Arbre(Val 1,Val 2),Arbre(Val 3,Val 4)));;
+
+let a2 = (Arbre(Arbre(Val 5,Val 6),Arbre(Val 7,Val 8)));;
+
+let a3 = (Arbre(Arbre(Val 9,Val 10),Val 11));;
+
+let rec nbNoeudsInternes a = match a with Val e->0
+                                        |Arbre(a1,a2)->1+nbNoeudsInternes a1+nbNoeudsInternes a2;;
+
+nbNoeudsInternes a1;;
+
+let rec nbFeuilles a = match a with Val e->1
+                                |Arbre(a1,a2)->nbFeuilles a1+nbFeuilles a2;;
+
+nbFeuilles a1;;
+
+let rec profondeur a = match a with Val e->1
+                                |Arbre(a1,a2)->if profondeur a1>profondeur a2 then profondeur a2 + 1
+                                                else profondeur a1 + 1;;
+
+profondeur a1;;
+
+let rec memeForme a1 a2 = match a1,a2 with Val e,Val f->true
+                                        |Arbre(x,y),Arbre(z,t)->memeForme x z && memeForme y t
+                                        |_,_->false;;
+
+memeForme a1 a2;;
+
+memeForme a1 a3;;
+
+let rec listeVal a = match a with Val e->[e]
+                                |Arbre(a1,a2)->listeVal a1 @ listeVal a2;;
+
+listeVal a1;;
+
+let rec map_arbre f a = match a with Val e->Val (f e)
+                                |Arbre(a1,a2)->Arbre(map_arbre f a1,map_arbre f a2);;
+
+let incremAll a = map_arbre (fun x -> x+1) a;;
+
+incremAll a1;;
+
+(*-------------------------------------------Ex 2---------------------------------------------*)
+
+type operateur_bin = Mult | Add;;
+
+type operateur_un = Moins;;
+
+type 'a arbre = Const of int 
+            | Var of string 
+            | Noeud1 of (operateur_un * 'a arbre) 
+            | Noeud2 of (operateur_bin * 'a arbre * 'a arbre);;
+
+let rec chaine_de_arbre a = match a with Noeud1(Moins,a1)->"(-"^chaine_de_arbre a1^")"
+                                        |Noeud2(Mult,a1,a2)->"("^chaine_de_arbre a1^"*"^chaine_de_arbre a2^")"
+                                        |Noeud2(Add,a1,a2)->"("^chaine_de_arbre a1^"+"^chaine_de_arbre a2^")"
+                                        |Var(e)->e
+                                        |Const(e)->string_of_int e;;
+
+let a = Noeud1(Moins,Noeud2(Mult,Noeud2(Add,Const(8),Const(3)),Var("x")));;
+
+chaine_de_arbre a;;
+
+let rec close1 e li = match li with []->false
+                            |(a,b)::r->if a=e then true
+                                    else close1 e r;;
+
+let rec close e li = match e with Var(x)->close1 x li
+                            |Noeud2(Mult,a1,a2)->close a1 li && close a2 li
+                            |Noeud2(Add,a1,a2)->close a1 li && close a2 li
+                            |Noeud1(Moins,a1)->close a1 li
+                            |Const(e)->true;;
+
+close a [("x",5)];;
+
