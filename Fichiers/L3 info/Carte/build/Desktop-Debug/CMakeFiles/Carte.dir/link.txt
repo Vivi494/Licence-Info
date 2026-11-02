@@ -1,0 +1,1 @@
+/bin/g++ -DQT_QML_DEBUG -g -Wl,--dependency-file=CMakeFiles/Carte.dir/link.d CMakeFiles/Carte.dir/main.cpp.o CMakeFiles/Carte.dir/tailleposition.cpp.o -o Carte

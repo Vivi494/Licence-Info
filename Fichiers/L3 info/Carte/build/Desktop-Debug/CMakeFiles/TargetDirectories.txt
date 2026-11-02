@@ -1,0 +1,3 @@
+/home/vjoseph/Carte/build/Desktop-Debug/CMakeFiles/Carte.dir
+/home/vjoseph/Carte/build/Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/vjoseph/Carte/build/Desktop-Debug/CMakeFiles/rebuild_cache.dir
