@@ -1,0 +1,1 @@
+/bin/g++ -DQT_QML_DEBUG -g -Wl,--dependency-file=CMakeFiles/Couleurs.dir/link.d CMakeFiles/Couleurs.dir/main.cpp.o CMakeFiles/Couleurs.dir/sequence.cpp.o -o Couleurs
