@@ -1,0 +1,1 @@
+/bin/g++ -DQT_QML_DEBUG -g -Wl,--dependency-file=CMakeFiles/premierprojet.dir/link.d CMakeFiles/premierprojet.dir/main.cpp.o CMakeFiles/premierprojet.dir/sequence.cpp.o -o premierprojet
