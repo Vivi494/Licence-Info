@@ -1,4 +1,4 @@
-#include "sequence.hh"
+#include "sequence.hpp"
 #include <iostream>
 int main() {
     sequence a;
